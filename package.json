@@ -47,5 +47,14 @@
   "bugs": {
     "url": "https://github.com/cognitive-cake/my-first-oauth-app/issues"
   },
-  "homepage": "https://github.com/cognitive-cake/my-first-oauth-app#readme"
+  "homepage": "https://github.com/cognitive-cake/my-first-oauth-app#readme",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "keywords": [
+    "OAuth",
+    "Web-app",
+    "Vkontakte"
+  ]
 }
