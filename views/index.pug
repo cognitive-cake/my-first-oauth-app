@@ -1,5 +1,7 @@
-extends layout
+extends layout.pug
 
 block content
   h1= title
   p Welcome to #{title}
+  p
+    a(href='http://oauth.vk.com/authorize?client_id=6273123&scope=2&redirect_uri=https://arcane-cliffs-64611.herokuapp.com/verified&response_type=code') Авторизация через ВКонтакте
