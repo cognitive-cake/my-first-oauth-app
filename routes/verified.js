@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET verify page */
+/* GET verified page */
 router.get('/', function (req, res, next) {
-  res.render('verify');
+  res.render('verified');
 });
 
 module.exports = router;
