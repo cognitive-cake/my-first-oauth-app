@@ -8,6 +8,9 @@
     "debug": "DEBUG=tutorial__local_library:* npm run devstart",
     "debug-win": "SET DEBUG=tutorial__local_library:* & npm run devstart"
   },
+  "engines": {
+    "node": ">=8.9.1"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
