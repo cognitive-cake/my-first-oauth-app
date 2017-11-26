@@ -4,8 +4,8 @@ const router = express.Router();
 
 /* GET verified page */
 router.get('/', (req, res) => {
-  res.render('verified');
-  console.log(req.params[0]);
+  const param = req.params[0];
+  res.render('verified', { status: param });
 });
 
 module.exports = router;
