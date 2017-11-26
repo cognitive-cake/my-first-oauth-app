@@ -8,15 +8,17 @@ const parameters = {
   redirect_uri: 'https://arcane-cliffs-64611.herokuapp.com/auth',
 };
 
+
+/* GET Access token */
 const cb = (code) => {
   request.get(`https://oauth.vk.com/access_token?client_id=${parameters.client_id}&client_secret=${parameters.client_secret}&code=${code}&redirect_uri=${parameters.redirect_uri}`, (err, res, resBody) => {
-    console.log('error:', err); // Print the error if one occurred and handle it
-    console.log('statusCode:', res && res.statusCode); // Print the response status code if a response was received
+    console.error('error:', err);
+    console.log('statusCode:', res && res.statusCode);
     console.log(resBody);
   });
 };
 
-/* GET verification page */
+/* GET authorization page */
 router.get('/', (req, res) => {
   if (req.query.error) {
     console.error(`Auth error: ${req.query.error}`);
