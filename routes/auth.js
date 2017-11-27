@@ -40,6 +40,7 @@ router.get('/', (req, res) => {
       httpOnly: true,
       secure: true,
     });
+    console.log(token);
   } else {
     res.render('auth', { status: 'Авторизация не пройдена', message: 'Попробуйте ещё раз' });
   }
