@@ -10,11 +10,12 @@ const parameters = {
 
 
 /* GET Access token */
-const cb = (code) => {
+const getToken = (code) => {
   request.get(`https://oauth.vk.com/access_token?client_id=${parameters.client_id}&client_secret=${parameters.client_secret}&code=${code}&redirect_uri=${parameters.redirect_uri}`, (err, res, resBody) => {
     console.error('error:', err);
     console.log('statusCode:', res && res.statusCode);
     console.log(resBody);
+    return resBody;
   });
 };
 
@@ -26,7 +27,19 @@ router.get('/', (req, res) => {
     res.render('auth', { status: 'Ошибка!', message: 'Доступ к вашему аккаунту не был предоставлен.' });
   } else if (req.query.code) {
     res.render('auth', { status: 'Авторизация успешна!' });
-    cb(req.query.code);
+    const token = getToken(req.query.code);
+    res.cookie('access_token', token.access_token, {
+      domain: '.herokuapp.com',
+      expires: new Date(Date.now() + token.expires_in),
+      httpOnly: true,
+      secure: true,
+    });
+    res.cookie('user_id', token.user_id, {
+      domain: '.herokuapp.com',
+      expires: new Date(Date.now() + token.expires_in),
+      httpOnly: true,
+      secure: true,
+    });
   } else {
     res.render('auth', { status: 'Авторизация не пройдена', message: 'Попробуйте ещё раз' });
   }
