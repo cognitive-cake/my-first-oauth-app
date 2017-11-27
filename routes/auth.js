@@ -11,7 +11,7 @@ const parameters = {
 
 /* GET Access token */
 const getToken = (code) => {
-  request.get(`https://oauth.vk.com/access_token?client_id=${parameters.client_id}&client_secret=${parameters.client_secret}&code=${code}&redirect_uri=${parameters.redirect_uri}`, (err, res, resBody) => {
+  return request.get(`https://oauth.vk.com/access_token?client_id=${parameters.client_id}&client_secret=${parameters.client_secret}&code=${code}&redirect_uri=${parameters.redirect_uri}`, (err, res, resBody) => {
     console.error('error:', err);
     console.log('statusCode:', res && res.statusCode);
     console.log(resBody);
