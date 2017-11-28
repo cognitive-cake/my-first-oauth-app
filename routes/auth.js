@@ -15,7 +15,7 @@ const getToken = (code) => {
   request.get(`https://oauth.vk.com/access_token?client_id=${parameters.client_id}&client_secret=${parameters.client_secret}&code=${code}&redirect_uri=${parameters.redirect_uri}`, (err, res, resBody) => {
     console.error('error:', err);
     console.log('statusCode:', res && res.statusCode);
-    console.log(resBody);
+    console.log(resBody, Date.now());
   });
 };
 
@@ -25,13 +25,15 @@ router.get('/', (req, res) => {
     console.error(`Auth error: ${req.query.error}`);
     console.error(`Error description: ${req.query.error_description}`);
     res.render('auth', { status: 'Ошибка!', message: 'Доступ к вашему аккаунту не был предоставлен.' });
-    console.log('Im print after res.render!')
   } else if (req.query.code) {
+    // debugger
     res.render('auth', { status: 'Авторизация успешна!' });
     getToken(req.query.code);
+    console.log('Im print after getToken!', Date.now());
   } else {
-    res.render('auth', { status: 'Авторизация не пройдена', message: 'Попробуйте ещё раз' });
-    res.redirect(parameters.homepage);
+    // res.render('auth', { status: 'Авторизация не пройдена', message: 'Попробуйте ещё раз' });
+    // res.set('Content-Type', 'text/plain');
+    res.redirect('back');
   }
 });
 
