@@ -10,11 +10,17 @@ const parameters = {
   homepage: 'https://arcane-cliffs-64611.herokuapp.com',
 };
 
+let tokenData = '';
+
 /* GET Access token */
 const getToken = (code) => {
-  request
-    .get(`https://oauth.vk.com/access_token?client_id=${parameters.client_id}&client_secret=${parameters.client_secret}&code=${code}&redirect_uri=${parameters.redirect_uri}`)
-    .on('error', err => console.log(err));
+  request.get(`https://oauth.vk.com/access_token?client_id=${parameters.client_id}&client_secret=${parameters.client_secret}&code=${code}&redirect_uri=${parameters.redirect_uri}`, (err, response, body) => {
+    if (err) {
+      throw err;
+    }
+    console.log(`Req.body: ${body}`);
+    tokenData = body;
+  });
 };
 
 /* GET authorization page */
@@ -22,15 +28,14 @@ router.get('/', (req, res) => {
   console.log('Cookies!:', req.cookies);
   if (req.cookies.access_token) {
     console.log('token:', req.cookies.access_token);
-    res.redirect('auth/session');
+    res.redirect('auth-result');
   } else if (req.query.error) {
     console.error(`Auth error: ${req.query.error}`);
     console.error(`Error description: ${req.query.error_description}`);
     res.render('auth', { status: 'Ошибка!', message: 'Доступ к вашему аккаунту не был предоставлен.' });
+    res.redirect('auth-result');
   } else if (req.query.code) {
-    res
-      .cookie('test', 'cookie')
-      .render('auth', { status: 'Идёт авторизация...' });
+    res.render('auth', { status: 'Идёт авторизация...' });
     getToken(req.query.code);
   } else {
     res.render('auth', { status: 'Авторизация не пройдена', message: 'Попробуйте ещё раз' });
@@ -41,7 +46,8 @@ router.get('/session', (req, res) => {
   res.render('auth', { status: 'Токен найден!' });
 });
 
-module.exports = router;
+exports.router = router;
+exports.token = tokenData;
 
 /* console.log(token);
 res.cookie('access_token', token.access_token, {
